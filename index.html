@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Blog | Bootstrap 5</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .navbar {
+            background: var(--gradient) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: var(--gradient);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTIwMCA4MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA3KSI+PGNpcmNsZSBjeD0iNjAwIiBjeT0iNDAwIiByPSIyMDAiLz48Y2lyY2xlIGN4PSI5MDAiIGN5PSIzMDAiIHI9IjE1MCIvPjxjaXJjbGUgY3g9IjMwMCIgY3k9IjUwMCIgcj0iMTAwIi8+PGNpcmNsZSBjeD0iNTAwIiBjeT0iMjAwIiByPSIxNTAiLz48L2c+PC9zdmc+');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .blog-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-img-top {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .card-text {
+            flex-grow: 1;
+            color: #6c757d;
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .author-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .footer {
+            background: #1a1a2e;
+            color: white;
+        }
+        
+        .footer h5 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .blog-post {
+            display: none;
+        }
+        
+        .active-post {
+            display: block;
+        }
+        
+        .back-to-blog {
+            cursor: pointer;
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-blog:hover {
+            background: var(--light-color);
+            transform: translateX(-5px);
+        }
+        
+        .blog-content img {
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-block {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .blog-header {
+            margin-bottom: 3rem;
+        }
+        
+        .featured-badge {
+            background: var(--gradient);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        .like-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .like-btn:hover, .like-btn.active {
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .card-img-container {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="home-link">
+                <i class="bi bi-pen me-2"></i>CreativeBlog
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="home-nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Listing Page -->
+    <div id="blog-listing" class="active-post">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 hero-content">
+                        <span class="featured-badge">Featured Blog</span>
+                        <h1 class="display-4 fw-bold mb-4">Explore Ideas That Inspire Innovation</h1>
+                        <p class="lead mb-4">Discover cutting-edge insights on technology, design, and development from industry experts.</p>
+                        <a href="#featured-posts" class="btn btn-light btn-lg">Start Reading</a>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDUwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODcpIi8+CjxwYXRoIGQ9Ik0yNTAgMTUwQzI5NS4yMjkgMTUwIDMzMCAxMTUuMjI5IDMzMCA3MEMzMzAgMjQuNzcwOCAyOTUuMjI5IC0xMCAyNTAgLTEwQzIwNC43NzEgLTEwIDE3MCAyNC43NzA4IDE3MCA3MEMxNzAgMTE1LjIyOSAyMDQuNzcxIDE1MCAyNTAgMTUwWiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yIi8+CjxwYXRoIGQ9Ik0zODAgMjUwQzQyNS4yMjkgMjUwIDQ2MCAyMTUuMjI5IDQ2MCAxNzBDNDYwIDEyNC43NzEgNDI1LjIyOSA5MCAzODAgOTBDMzM0Ljc3MSA5MCAzMDAgMTI0Ljc3MSAzMDAgMTcwQzMwMCAyMTUuMjI5IDMzNC43NzEgMjUwIDM4MCAyNTBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPHBhdGggZD0iTTEyMCAyNTBDMTY1LjIyOSAyNTAgMjAwIDIxNS4yMjkgMjAwIDE3MEMyMDAgMTI0Ljc3MSAxNjUuMjI5IDkwIDEyMCA5MEM3NC43NzA4IDkwIDQwIDEyNC43NzEgNDAgMTcwQzQwIDIxNS4yMjkgNzQuNzcwOCAyNTAgMTIwIDI1MFoiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9IjAuMiIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzg3IiB4MT0iMjUwIiB5MT0iMCIgeDI9IjI1MCIgeTI9IjQwMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNDM2MWVlIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzNhMGNhMyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=" 
+                             alt="Blog Illustration" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="container my-5" id="featured-posts">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="section-title">Featured Posts</h2>
+                </div>
+            </div>
+            
+            <!-- Blog Posts Grid -->
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card blog-card">
+                        <div class="card-img-container">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODcpIi8+CjxwYXRoIGQ9Ik0xMDAgODBDMTI0Ljg1MyA4MCAxNDUgNTkuODUzMSAxNDUgMzVDMTQ1IDEwLjE0NjkgMTI0Ljg1MyAtMTAgMTAwIC0xMEM3NS4xNDY5IC0xMCA1NSAxMC4xNDY5IDU1IDM1QzU1IDU5Ljg1MzEgNzUuMTQ2OSA4MCAxMDAgODBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPHBhdGggZD0iTTMwMCAxMjBDMzI0Ljg1MyAxMjAgMzQ1IDk5Ljg1MzEgMzQ1IDc1QzM0NSA1MC4xNDY5IDMyNC44NTMgMzAgMzAwIDMwQzI3NS4xNDcgMzAgMjU1IDUwLjE0NjkgMjU1IDc1QzI1NSA5OS44NTMxIDI3NS4xNDcgMTIwIDMwMCAxMjBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl84NyIgeDE9IjIwMCIgeTE9IjAiIHgyPSIyMDAiIHkyPSIyMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzQzNjFlZSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzYTBjYTMiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" 
+                                 class="card-img-top" alt="Web Development">
+                        </div>
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">Technology</span>
+                            <h5 class="card-title">Getting Started with Modern Web Development</h5>
+                            <p class="card-text">Learn the fundamentals of HTML, CSS, and JavaScript to kickstart your journey in web development with modern tools and practices.</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-outline-primary read-more" data-post="post1">Read More</button>
+                                    <div class="author-info">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM0Y2M5ZjAiLz4KPGNpcmNsZSBjeD0iMjAiIGN5PSIxNiIgcj0iNiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTggMzJDMTIgMjQgMjAgMjAgMjggMjBDMzYgMjAgNDQgMjQgNDggMzIiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" 
+                                             alt="Author" class="author-img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <small class="text-muted">May 15, 2023</small>
+                            <small class="text-muted"><i class="bi bi-clock"></i> 5 min read</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card blog-card">
+                        <div class="card-img-container">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODgpIi8+CjxwYXRoIGQ9Ik0xMDAgODBDMTI0Ljg1MyA4MCAxNDUgNTkuODUzMSAxNDUgMzVDMTQ1IDEwLjE0NjkgMTI0Ljg1MyAtMTAgMTAwIC0xMEM3NS4xNDY5IC0xMCA1NSAxMC4xNDY5IDU1IDM1QzU1IDU5Ljg1MzEgNzUuMTQ2OSA4MCAxMDAgODBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPHBhdGggZD0iTTMwMCAxMjBDMzI0Ljg1MyAxMjAgMzQ1IDk5Ljg1MzEgMzQ1IDc1QzM0NSA1MC4xNDY5IDMyNC44NTMgMzAgMzAwIDMwQzI3NS4xNDcgMzAgMjU1IDUwLjE0NjkgMjU1IDc1QzI1NSA5OS44NTMxIDI3NS4xNDcgMTIwIDMwMCAxMjBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl84OCIgeDE9IjIwMCIgeTE9IjAiIHgyPSIyMDAiIHkyPSIyMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzQwZDU3NCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyOGE0NjUiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" 
+                                 class="card-img-top" alt="UI/UX Design">
+                        </div>
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2">Design</span>
+                            <h5 class="card-title">Principles of Modern UI/UX Design</h5>
+                            <p class="card-text">Explore the key principles that make user interfaces intuitive and user experiences delightful in the digital age.</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-outline-primary read-more" data-post="post2">Read More</button>
+                                    <div class="author-info">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNmNzY4YjAiLz4KPGNpcmNsZSBjeD0iMjAiIGN5PSIxNiIgcj0iNiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTggMzJDMTIgMjQgMjAgMjAgMjggMjBDMzYgMjAgNDQgMjQgNDggMzIiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" 
+                                             alt="Author" class="author-img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <small class="text-muted">April 28, 2023</small>
+                            <small class="text-muted"><i class="bi bi-clock"></i> 8 min read</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card blog-card">
+                        <div class="card-img-container">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODkpIi8+CjxwYXRoIGQ9Ik0xMDAgODBDMTI0Ljg1MyA4MCAxNDUgNTkuODUzMSAxNDUgMzVDMTQ1IDEwLjE0NjkgMTI0Ljg1MyAtMTAgMTAwIC0xMEM3NS4xNDY5IC0xMCA1NSAxMC4xNDY5IDU1IDM1QzU1IDU5Ljg1MzEgNzUuMTQ2OSA4MCAxMDAgODBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPHBhdGggZD0iTTMwMCAxMjBDMzI0Ljg1MyAxMjAgMzQ1IDk5Ljg1MzEgMzQ1IDc1QzM0NSA1MC4xNDY5IDMyNC44NTMgMzAgMzAwIDMwQzI3NS4xNDcgMzAgMjU1IDUwLjE0NjkgMjU1IDc1QzI1NSA5OS44NTMxIDI3NS4xNDcgMTIwIDMwMCAxMjBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl84OSIgeDE9IjIwMCIgeTE9IjAiIHgyPSIyMDAiIHkyPSIyMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzE3YTJiOCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwZjc5YWEiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" 
+                                 class="card-img-top" alt="Data Science">
+                        </div>
+                        <div class="card-body">
+                            <span class="badge bg-info mb-2">Data Science</span>
+                            <h5 class="card-title">Introduction to Data Science</h5>
+                            <p class="card-text">Discover how data science is transforming industries and what skills you need to get started in this exciting field.</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-outline-primary read-more" data-post="post3">Read More</button>
+                                    <div class="author-info">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNmMzkyNGMiLz4KPGNpcmNsZSBjeD0iMjAiIGN5PSIxNiIgcj0iNiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTggMzJDMTIgMjQgMjAgMjAgMjggMjBDMzYgMjAgNDQgMjQgNDggMzIiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" 
+                                             alt="Author" class="author-img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <small class="text-muted">April 10, 2023</small>
+                            <small class="text-muted"><i class="bi bi-clock"></i> 10 min read</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Individual Blog Posts -->
+    
+    <!-- Post 1 -->
+    <div id="post1" class="blog-post">
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <button class="btn btn-outline-secondary mb-4 back-to-blog">
+                        <i class="bi bi-arrow-left"></i> Back to Blog
+                    </button>
+                    
+                    <article class="blog-content">
+                        <header class="blog-header">
+                            <span class="badge bg-primary mb-3">Technology</span>
+                            <h1 class="display-5 fw-bold">Getting Started with Modern Web Development</h1>
+                            <div class="d-flex align-items-center mt-4">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiM0Y2M5ZjAiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIyNCIgcj0iOSIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyIDQ4QzE4IDM2IDMwIDMwIDQyIDMwQzU0IDMwIDY2IDM2IDcyIDQ4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" 
+                                     alt="Author" class="author-img me-3">
+                                <div>
+                                    <h5 class="mb-0">John Smith</h5>
+                                    <small class="text-muted">May 15, 2023 · 5 min read</small>
+                                </div>
+                            </div>
+                        </header>
+                        
+                        <div class="content-block">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDgwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODcpIi8+CjxwYXRoIGQ9Ik0yMDAgMTYwQzI0OS44NTMgMTYwIDI4MCAxMTkuODUzIDI4MCA3MEMyODAgMjAuMTQ2OSAyNDkuODUzIC0yMCAyMDAgLTIwQzE1MC4xNDcgLTIwIDEyMCAyMC4xNDY5IDEyMCA3MEMxMjAgMTE5Ljg1MyAxNTAuMTQ3IDE2MCAyMDAgMTYwWiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yIi8+CjxwYXRoIGQ9Ik02MDAgMjQwQzY0OS44NTMgMjQwIDY4MCAxOTkuODUzIDY4MCAxNTBDNjgwIDEwMC4xNDcgNjQ5Ljg1MyA2MCA2MDAgNjBDNTUwLjE0NyA2MCA1MjAgMTAwLjE0NyA1MjAgMTUwQzUyMCAxOTkuODUzIDU1MC4xNDcgMjQwIDYwMCAyNDBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl84NyIgeDE9IjQwMCIgeTE9IjAiIHgyPSI0MDAiIHkyPSI0MDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzQzNjFlZSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzYTBjYTMiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" 
+                                 alt="Web Development" class="img-fluid rounded mb-4">
+                            
+                            <p class="lead">Web development is one of the most in-demand skills in today's digital world. Whether you want to build your own website, start a career in tech, or simply understand how the web works, learning web development is a valuable investment.</p>
+                            
+                            <h2>Understanding the Basics</h2>
+                            <p>Web development typically involves three core technologies: HTML, CSS, and JavaScript. Think of them as the building blocks of the web:</p>
+                            
+                            <ul>
+                                <li><strong>HTML (HyperText Markup Language)</strong> provides the structure of a webpage</li>
+                                <li><strong>CSS (Cascading Style Sheets)</strong> controls the visual presentation and layout</li>
+                                <li><strong>JavaScript</strong> adds interactivity and dynamic behavior</li>
+                            </ul>
+                            
+                            <h2>Setting Up Your Development Environment</h2>
+                            <p>Before you start coding, you'll need a few tools:</p>
+                            
+                            <ol>
+                                <li>A text editor like VS Code, Sublime Text, or Atom</li>
+                                <li>A web browser (Chrome, Firefox, or Safari)</li>
+                                <li>Optional: Version control with Git</li>
+                            </ol>
+                            
+                            <div class="alert alert-info mt-4">
+                                <h4><i class="bi bi-lightbulb"></i> Pro Tip</h4>
+                                <p class="mb-0">Build projects as you learn. Creating real websites, even simple ones, will reinforce your skills and give you a portfolio to showcase your abilities.</p>
+                            </div>
+                        </div>
+                        
+                        <footer class="mt-5 pt-4 border-top">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted">Share this post:</span>
+                                    <div class="d-inline-flex gap-2 ms-2 social-icons">
+                                        <a href="#"><i class="bi bi-facebook"></i></a>
+                                        <a href="#"><i class="bi bi-twitter"></i></a>
+                                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary like-btn" id="likeBtn1">
+                                    <i class="bi bi-heart"></i> <span>24</span>
+                                </button>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Post 2 -->
+    <div id="post2" class="blog-post">
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <button class="btn btn-outline-secondary mb-4 back-to-blog">
+                        <i class="bi bi-arrow-left"></i> Back to Blog
+                    </button>
+                    
+                    <article class="blog-content">
+                        <header class="blog-header">
+                            <span class="badge bg-success mb-3">Design</span>
+                            <h1 class="display-5 fw-bold">Principles of Modern UI/UX Design</h1>
+                            <div class="d-flex align-items-center mt-4">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNmNzY4YjAiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIyNCIgcj0iOSIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyIDQ4QzE4IDM2IDMwIDMwIDQyIDMwQzU0IDMwIDY2IDM2IDcyIDQ4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" 
+                                     alt="Author" class="author-img me-3">
+                                <div>
+                                    <h5 class="mb-0">Sarah Johnson</h5>
+                                    <small class="text-muted">April 28, 2023 · 8 min read</small>
+                                </div>
+                            </div>
+                        </header>
+                        
+                        <div class="content-block">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDgwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODgpIi8+CjxwYXRoIGQ9Ik0yMDAgMTYwQzI0OS44NTMgMTYwIDI4MCAxMTkuODUzIDI4MCA3MEMyODAgMjAuMTQ2OSAyNDkuODUzIC0yMCAyMDAgLTIwQzE1MC4xNDcgLTIwIDEyMCAyMC4xNDY5IDEyMCA3MEMxMjAgMTE5Ljg1MyAxNTAuMTQ3IDE2MCAyMDAgMTYwWiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yIi8+CjxwYXRoIGQ9Ik02MDAgMjQwQzY0OS44NTMgMjQwIDY4MCAxOTkuODUzIDY4MCAxNTBDNjgwIDEwMC4xNDcgNjQ5Ljg1MyA2MCA2MDAgNjBDNTUwLjE0NyA2MCA1MjAgMTAwLjE0NyA1MjAgMTUwQzUyMCAxOTkuODUzIDU1MC4xNDcgMjQwIDYwMCAyNDBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl84OCIgeDE9IjQwMCIgeTE9IjAiIHgyPSI0MDAiIHkyPSI0MDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzQwZDU3NCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyOGE0NjUiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" 
+                                 alt="UI/UX Design" class="img-fluid rounded mb-4">
+                            
+                            <p class="lead">Good design is not just about aesthetics—it's about creating intuitive, accessible, and enjoyable experiences for users. In this article, we'll explore the fundamental principles that guide modern UI/UX design.</p>
+                            
+                            <h2>User-Centered Design</h2>
+                            <p>At the heart of modern design is a focus on the user. This means understanding their needs, behaviors, and limitations. User-centered design involves:</p>
+                            
+                            <ul>
+                                <li>Conducting user research and creating personas</li>
+                                <li>Testing designs with real users</li>
+                                <li>Iterating based on feedback</li>
+                                <li>Considering accessibility for all users</li>
+                            </ul>
+                            
+                            <h2>Consistency and Standards</h2>
+                            <p>Users should not have to wonder whether different words, situations, or actions mean the same thing. Follow platform and industry conventions.</p>
+                            
+                            <p>Consistency in design helps users transfer knowledge from one part of your application to another, reducing cognitive load and making your interface more intuitive.</p>
+                            
+                            <div class="alert alert-warning mt-4">
+                                <h4><i class="bi bi-exclamation-triangle"></i> Common Mistake</h4>
+                                <p class="mb-0">Don't sacrifice usability for aesthetics. A beautiful design that's difficult to use will frustrate users and drive them away.</p>
+                            </div>
+                        </div>
+                        
+                        <footer class="mt-5 pt-4 border-top">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted">Share this post:</span>
+                                    <div class="d-inline-flex gap-2 ms-2 social-icons">
+                                        <a href="#"><i class="bi bi-facebook"></i></a>
+                                        <a href="#"><i class="bi bi-twitter"></i></a>
+                                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary like-btn" id="likeBtn2">
+                                    <i class="bi bi-heart"></i> <span>42</span>
+                                </button>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Post 3 -->
+    <div id="post3" class="blog-post">
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <button class="btn btn-outline-secondary mb-4 back-to-blog">
+                        <i class="bi bi-arrow-left"></i> Back to Blog
+                    </button>
+                    
+                    <article class="blog-content">
+                        <header class="blog-header">
+                            <span class="badge bg-info mb-3">Data Science</span>
+                            <h1 class="display-5 fw-bold">Introduction to Data Science</h1>
+                            <div class="d-flex align-items-center mt-4">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNmMzkyNGMiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIyNCIgcj0iOSIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyIDQ4QzE4IDM2IDMwIDMwIDQyIDMwQzU0IDMwIDY2IDM2IDcyIDQ4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" 
+                                     alt="Author" class="author-img me-3">
+                                <div>
+                                    <h5 class="mb-0">Michael Chen</h5>
+                                    <small class="text-muted">April 10, 2023 · 10 min read</small>
+                                </div>
+                            </div>
+                        </header>
+                        
+                        <div class="content-block">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDgwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfODkpIi8+CjxwYXRoIGQ9Ik0yMDAgMTYwQzI0OS44NTMgMTYwIDI4MCAxMTkuODUzIDI4MCA3MEMyODAgMjAuMTQ2OSAyNDkuODUzIC0yMCAyMDAgLTIwQzE1MC4xNDcgLTIwIDEyMCAyMC4xNDY5IDEyMCA3MEMxMjAgMTE5Ljg1MyAxNTAuMTQ3IDE2MCAyMDAgMTYwWiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yIi8+CjxwYXRoIGQ9Ik02MDAgMjQwQzY0OS44NTMgMjQwIDY4MCAxOTkuODUzIDY4MCAxNTBDNjgwIDEwMC4xNDcgNjQ5Ljg1MyA2MCA2MDAgNjBDNTUwLjE0NyA2MCA1MjAgMTAwLjE0NyA1MjAgMTUwQzUyMCAxOTkuODUzIDU1MC4xNDcgMjQwIDYwMCAyNDBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjIiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl84OSIgeDE9IjQwMCIgeTE9IjAiIHgyPSI0MDAiIHkyPSI0MDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzE3YTJiOCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwZjc5YWEiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" 
+                                 alt="Data Science" class="img-fluid rounded mb-4">
+                            
+                            <p class="lead">Data science is an interdisciplinary field that uses scientific methods, processes, algorithms, and systems to extract knowledge and insights from structured and unstructured data. In this article, we'll explore what data science is, why it matters, and how you can get started.</p>
+                            
+                            <h2>What is Data Science?</h2>
+                            <p>Data science combines multiple fields, including statistics, scientific methods, artificial intelligence (AI), and data analysis, to extract value from data. Data scientists use a combination of tools, applications, principles, and algorithms to make sense of random data clusters.</p>
+                            
+                            <p>Since almost all types of organizations generate exponential amounts of data globally, monitoring and storing this data becomes difficult. Data science focuses on data modeling and data warehouse to track the ever-growing data set.</p>
+                            
+                            <h2>The Data Science Process</h2>
+                            <p>Most data science projects follow a similar process:</p>
+                            
+                            <ol>
+                                <li><strong>Problem Definition:</strong> Understanding the business problem and defining clear objectives</li>
+                                <li><strong>Data Collection:</strong> Gathering relevant data from various sources</li>
+                                <li><strong>Data Preparation:</strong> Cleaning and transforming data for analysis</li>
+                                <li><strong>Exploratory Data Analysis:</strong> Understanding patterns and relationships in the data</li>
+                                <li><strong>Model Building:</strong> Creating predictive or descriptive models</li>
+                                <li><strong>Model Evaluation:</strong> Testing model performance and accuracy</li>
+                                <li><strong>Deployment:</strong> Implementing the model in a production environment</li>
+                                <li><strong>Monitoring and Maintenance:</strong> Ensuring the model continues to perform well over time</li>
+                            </ol>
+                            
+                            <div class="alert alert-success mt-4">
+                                <h4><i class="bi bi-graph-up"></i> Industry Insight</h4>
+                                <p class="mb-0">The demand for data scientists continues to grow across industries. According to recent reports, data science roles are among the fastest-growing and highest-paying jobs in the tech industry.</p>
+                            </div>
+                        </div>
+                        
+                        <footer class="mt-5 pt-4 border-top">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted">Share this post:</span>
+                                    <div class="d-inline-flex gap-2 ms-2 social-icons">
+                                        <a href="#"><i class="bi bi-facebook"></i></a>
+                                        <a href="#"><i class="bi bi-twitter"></i></a>
+                                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary like-btn" id="likeBtn3">
+                                    <i class="bi bi-heart"></i> <span>37</span>
+                                </button>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5><i class="bi bi-pen me-2"></i>CreativeBlog</h5>
+                    <p class="text-muted">A platform for sharing knowledge and insights on technology, design, and development.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Home</a></li>
+                        <li class="mb-2"><a href="#">About</a></li>
+                        <li class="mb-2"><a href="#">Categories</a></li>
+                        <li class="mb-2"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Technology</a></li>
+                        <li class="mb-2"><a href="#">Design</a></li>
+                        <li class="mb-2"><a href="#">Development</a></li>
+                        <li class="mb-2"><a href="#">Data Science</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Newsletter</h5>
+                    <p class="text-muted">Subscribe to our newsletter for the latest updates.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">© 2023 CreativeBlog. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-muted text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-muted text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // JavaScript to handle navigation between blog listing and individual posts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all "Read More" buttons
+            const readMoreButtons = document.querySelectorAll('.read-more');
+            
+            // Get all blog posts and the blog listing
+            const blogListing = document.getElementById('blog-listing');
+            const blogPosts = document.querySelectorAll('.blog-post');
+            
+            // Get the home link and home nav link
+            const homeLink = document.getElementById('home-link');
+            const homeNavLink = document.getElementById('home-nav-link');
+            
+            // Get all "Back to Blog" buttons
+            const backToBlogButtons = document.querySelectorAll('.back-to-blog');
+            
+            // Get like buttons
+            const likeButtons = document.querySelectorAll('.like-btn');
+            
+            // Function to show a specific blog post
+            function showBlogPost(postId) {
+                // Hide the blog listing
+                blogListing.classList.remove('active-post');
+                
+                // Hide all blog posts
+                blogPosts.forEach(post => {
+                    post.classList.remove('active-post');
+                });
+                
+                // Show the selected blog post
+                const selectedPost = document.getElementById(postId);
+                if (selectedPost) {
+                    selectedPost.classList.add('active-post');
+                    
+                    // Scroll to top of the page
+                    window.scrollTo(0, 0);
+                    
+                    // Reset reading progress
+                    updateReadingProgress();
+                }
+            }
+            
+            // Function to show the blog listing
+            function showBlogListing() {
+                // Hide all blog posts
+                blogPosts.forEach(post => {
+                    post.classList.remove('active-post');
+                });
+                
+                // Show the blog listing
+                blogListing.classList.add('active-post');
+                
+                // Scroll to top of the page
+                window.scrollTo(0, 0);
+            }
+            
+            // Add event listeners to "Read More" buttons
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-post');
+                    showBlogPost(postId);
+                });
+            });
+            
+            // Add event listeners to "Back to Blog" buttons
+            backToBlogButtons.forEach(button => {
+                button.addEventListener('click', showBlogListing);
+            });
+            
+            // Add event listeners to home links
+            homeLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showBlogListing();
+            });
+            
+            homeNavLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showBlogListing();
+            });
+            
+            // Add event listeners to like buttons
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const span = this.querySelector('span');
+                    let count = parseInt(span.textContent);
+                    
+                    if (this.classList.contains('active')) {
+                        count--;
+                        this.classList.remove('active');
+                    } else {
+                        count++;
+                        this.classList.add('active');
+                    }
+                    
+                    span.textContent = count;
+                });
+            });
+            
+            // Reading progress functionality
+            function updateReadingProgress() {
+                const progressBar = document.getElementById('readingProgress');
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (documentHeight > 0) {
+                    const scrollPercentage = (scrollTop / documentHeight) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+            }
+            
+            // Update reading progress on scroll
+            window.addEventListener('scroll', updateReadingProgress);
+        });
+    </script>
+</body>
+</html>
